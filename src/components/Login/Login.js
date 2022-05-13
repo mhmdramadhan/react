@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import AuthContext from '../../store/auth-context';
 
 const emailReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
@@ -44,6 +45,8 @@ const Login = (props) => {
     value: '',
     isValid: null,
   });
+
+  const authCtx = useContext(AuthContext);
 
   // jadi useeffect ini diajalankan awal sebelum ngerender data
   //  ketika ada state yang diisi /  didefinisikan di object [], maka useeffect ini akan jalan kalo ada perubahan pada objet yang diisi
@@ -105,7 +108,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.isValid, passwordState.value);
+    authCtx.onLogin(emailState.isValid, passwordState.value);
   };
 
   return (
